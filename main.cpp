@@ -32,7 +32,7 @@
 #include "Plausi.h"
 #include "RRDatabase.h"
 
-static int delay = 1000;
+static int delay = 4000;
 
 #ifndef VERSION
 #define VERSION "0.9.7"
@@ -97,7 +97,7 @@ static void runSingle(ImageInput* pImageInput) {
         return;
     }
     std::cout << "OCR training data loaded.\n";
-
+    usleep(delay*1000L);
     pImageInput->nextImage();
 
     proc.setInput(pImageInput->getImage());
