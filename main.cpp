@@ -77,6 +77,40 @@ static void testOcr(ImageInput* pImageInput) {
     }
 }
 
+
+static void runSingle(ImageInput* pImageInput) {
+    log4cpp::Category::getRoot().info("testOcr");
+
+    Config config;
+    config.loadConfig();
+    ImageProcessor proc(config);
+    proc.debugWindow();
+    proc.debugDigits();
+
+    Plausi plausi;
+
+    KNearestOcr ocr(config);
+    if (! ocr.loadTrainingData()) {
+        std::cout << "Failed to load OCR training data\n";
+        return;
+    }
+    std::cout << "OCR training data loaded.\n";
+    std::cout << "<q> to quit.\n";
+
+    while (pImageInput->nextImage()) {
+        proc.setInput(pImageInput->getImage());
+        proc.process();
+
+        std::string result = ocr.recognize(proc.getOutput());
+        std::cout << result;
+        if (plausi.check(result, pImageInput->getTime())) {
+            std::cout << "  " << std::fixed << std::setprecision(1) << plausi.getCheckedValue() << std::endl;
+        } else {
+            std::cout << "  -------" << std::endl;
+        }
+    }
+}
+
 static void learnOcr(ImageInput* pImageInput) {
     log4cpp::Category::getRoot().info("learnOcr");
 
@@ -215,6 +249,7 @@ static void usage(const char* progname) {
     std::cout << "  -o <directory> : capture images into directory.\n";
     std::cout << "  -l : learn OCR.\n";
     std::cout << "  -t : test OCR.\n";
+    std::cout << "  -e : single element image OCR.\n";
     std::cout << "  -w : write OCR data to RR database. This is the normal working mode.\n";
     std::cout << "\nOptions:\n";
     std::cout << "  -s <n> : Sleep n milliseconds after processing of each image (default=1000).\n";
@@ -303,6 +338,10 @@ int main(int argc, char **argv) {
             break;
         case 't':
             testOcr(pImageInput);
+            break;
+        case 'e':
+            pImageInput = new CameraInput(atoi(optarg)); 
+            runSingle(pImageInput);
             break;
         case 'a':
             adjustCamera(pImageInput);
