@@ -102,7 +102,7 @@ static void runSingle(ImageInput* pImageInput) {
         usleep(1000L);
         proc.setInput(pImageInput->getImage());
         proc.process();
-        
+
         std::string result = ocr.recognize(proc.getOutput());
         std::cout << "recognize result:" << result;
         if (plausi.check(result, pImageInput->getTime())) {
@@ -283,7 +283,6 @@ int main(int argc, char **argv) {
     int cmdCount = 0;
 
     while ((opt = getopt(argc, argv, "i:c:ltaws:e:o:v:h")) != -1) {
-        std::cout << "opt" << opt <<".\n";
         switch (opt) {
             case 'i':
                 pImageInput = new DirectoryInput(Directory(optarg, ".png"));
@@ -297,7 +296,6 @@ int main(int argc, char **argv) {
             case 't':
             case 'a':
             case 'e':
-                std::cout << "first opt.\n";
                 cmd = opt;
                 cmdCount++;
                 outputDir = optarg;
@@ -349,7 +347,6 @@ int main(int argc, char **argv) {
             testOcr(pImageInput);
             break;
         case 'e':
-            std::cout << "second opt.\n";
             pImageInput->setOutputDir(outputDir); 
             runSingle(pImageInput);
             break;
