@@ -97,9 +97,9 @@ static void runSingle(ImageInput* pImageInput) {
         return;
     }
     std::cout << "OCR training data loaded.\n";
-    usleep(delay*1000L);
+    
     pImageInput->nextImage();
-
+    usleep(delay*1000L);
     proc.setInput(pImageInput->getImage());
     proc.process();
 
