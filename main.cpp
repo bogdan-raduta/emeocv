@@ -97,19 +97,18 @@ static void runSingle(ImageInput* pImageInput) {
         return;
     }
     std::cout << "OCR training data loaded.\n";
-    
-        pImageInput->nextImage();
-        proc.setInput(pImageInput->getImage());
-        usleep(1000L);
-        proc.process();
+    usleep(delay*1000L);
+    pImageInput->nextImage();
+    proc.setInput(pImageInput->getImage());
+    proc.process();
 
-        std::string result = ocr.recognize(proc.getOutput());
-        std::cout << "recognize result:" << result;
-        if (plausi.check(result, pImageInput->getTime())) {
-            std::cout << "  " << std::fixed << std::setprecision(1) << plausi.getCheckedValue() << std::endl;
-        } else {
-            std::cout << "  -------" << std::endl;
-        }
+    std::string result = ocr.recognize(proc.getOutput());
+    std::cout << "recognize result:" << result;
+    if (plausi.check(result, pImageInput->getTime())) {
+        std::cout << "  " << std::fixed << std::setprecision(1) << plausi.getCheckedValue() << std::endl;
+    } else {
+        std::cout << "  -------" << std::endl;
+    }
 
 }
 
