@@ -84,10 +84,10 @@ static void runSingle(ImageInput* pImageInput) {
     Config config;
     config.loadConfig();
     ImageProcessor proc(config);
-    proc.debugWindow();
-    proc.debugDigits();
-    proc.debugEdges();
-    proc.debugSkew();
+    //proc.debugWindow();
+    //proc.debugDigits();
+    //proc.debugEdges();
+    //proc.debugSkew();
 
     Plausi plausi;
 
