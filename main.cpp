@@ -86,6 +86,8 @@ static void runSingle(ImageInput* pImageInput) {
     ImageProcessor proc(config);
     proc.debugWindow();
     proc.debugDigits();
+    proc.debugEdges();
+    proc.debugSkew();
 
     Plausi plausi;
 
@@ -95,14 +97,14 @@ static void runSingle(ImageInput* pImageInput) {
         return;
     }
     std::cout << "OCR training data loaded.\n";
-    std::cout << "<q> to quit.\n";
+    
         pImageInput->nextImage();
         usleep(1000L);
         proc.setInput(pImageInput->getImage());
         proc.process();
-
+        
         std::string result = ocr.recognize(proc.getOutput());
-        std::cout << result;
+        std::cout << "recognize result:" << result;
         if (plausi.check(result, pImageInput->getTime())) {
             std::cout << "  " << std::fixed << std::setprecision(1) << plausi.getCheckedValue() << std::endl;
         } else {
@@ -152,8 +154,8 @@ static void adjustCamera(ImageInput* pImageInput) {
     ImageProcessor proc(config);
     proc.debugWindow();
     proc.debugDigits();
-    //proc.debugEdges();
-    //proc.debugSkew();
+    proc.debugEdges();
+    proc.debugSkew();
 
     std::cout << "Adjust camera.\n";
     std::cout << "<r>, <p> to select raw or processed image, <s> to save config and quit, <q> to quit without saving.\n";
