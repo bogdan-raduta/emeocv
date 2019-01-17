@@ -96,8 +96,6 @@ static void runSingle(ImageInput* pImageInput) {
     }
     std::cout << "OCR training data loaded.\n";
     std::cout << "<q> to quit.\n";
-
-    while (pImageInput->nextImage()) {
         proc.setInput(pImageInput->getImage());
         proc.process();
 
@@ -108,7 +106,7 @@ static void runSingle(ImageInput* pImageInput) {
         } else {
             std::cout << "  -------" << std::endl;
         }
-    }
+
 }
 
 static void learnOcr(ImageInput* pImageInput) {
