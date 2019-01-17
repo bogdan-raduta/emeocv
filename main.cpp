@@ -280,7 +280,7 @@ int main(int argc, char **argv) {
     char cmd = 0;
     int cmdCount = 0;
 
-    while ((opt = getopt(argc, argv, "i:c:ltaws:o:v:h")) != -1) {
+    while ((opt = getopt(argc, argv, "i:c:ltaews:o:v:h")) != -1) {
         switch (opt) {
             case 'i':
                 pImageInput = new DirectoryInput(Directory(optarg, ".png"));
