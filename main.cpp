@@ -99,8 +99,8 @@ static void runSingle(ImageInput* pImageInput) {
     std::cout << "OCR training data loaded.\n";
     
         pImageInput->nextImage();
-        usleep(1000L);
         proc.setInput(pImageInput->getImage());
+        usleep(1000L);
         proc.process();
 
         std::string result = ocr.recognize(proc.getOutput());
