@@ -37,6 +37,7 @@ void ImageInput::saveImage() {
     char filename[PATH_MAX];
     strftime(filename, PATH_MAX, "/%Y%m%d-%H%M%S.png", &date);
     std::string path = _outDir + filename;
+    "Image: " << path;
     if (cv::imwrite(path, _img)) {
         log4cpp::Category::getRoot() << log4cpp::Priority::INFO << "Image saved to " + path;
     }
@@ -88,6 +89,7 @@ bool CameraInput::nextImage() {
     // read image from camera
     bool success = _capture.read(_img);
 
+    std::cout << "Image captured: " << success;
     log4cpp::Category::getRoot() << log4cpp::Priority::INFO << "Image captured: " << success;
 
     // save copy of image if requested
