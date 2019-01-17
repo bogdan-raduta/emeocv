@@ -240,7 +240,7 @@ static void writeData(ImageInput* pImageInput) {
 static void usage(const char* progname) {
     std::cout << "Program to read and recognize the counter of an electricity meter with OpenCV.\n";
     std::cout << "Version: " << VERSION << std::endl;
-    std::cout << "Usage: " << progname << " [-i <dir>|-c <cam>] [-l|-t|-a|-w|-o <dir>] [-s <delay>] [-v <level>\n";
+    std::cout << "Usage: " << progname << " [-i <dir>|-c <cam>] [-l|-t|-a|-w|-e <dir>|-o <dir>] [-s <delay>] [-v <level>\n";
     std::cout << "\nImage input:\n";
     std::cout << "  -i <image directory> : read image files (png) from directory.\n";
     std::cout << "  -c <camera number> : read images from camera.\n";
@@ -249,7 +249,7 @@ static void usage(const char* progname) {
     std::cout << "  -o <directory> : capture images into directory.\n";
     std::cout << "  -l : learn OCR.\n";
     std::cout << "  -t : test OCR.\n";
-    std::cout << "  -e : single element image OCR.\n";
+    std::cout << "  -e <image directory>: single element image OCR.\n";
     std::cout << "  -w : write OCR data to RR database. This is the normal working mode.\n";
     std::cout << "\nOptions:\n";
     std::cout << "  -s <n> : Sleep n milliseconds after processing of each image (default=1000).\n";
@@ -294,6 +294,10 @@ int main(int argc, char **argv) {
             case 't':
             case 'a':
             case 'e':
+                cmd = opt;
+                cmdCount++;
+                outputDir = optarg;
+                break;
             case 'w':
                 cmd = opt;
                 cmdCount++;
@@ -341,7 +345,7 @@ int main(int argc, char **argv) {
             testOcr(pImageInput);
             break;
         case 'e':
-            pImageInput = new CameraInput(atoi(optarg)); 
+            pImageInput->setOutputDir(outputDir); 
             runSingle(pImageInput);
             break;
         case 'a':
