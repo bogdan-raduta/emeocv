@@ -293,6 +293,7 @@ int main(int argc, char **argv) {
             case 'l':
             case 't':
             case 'a':
+            case 'e':
             case 'w':
                 cmd = opt;
                 cmdCount++;
